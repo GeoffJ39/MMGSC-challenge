@@ -1,0 +1,14 @@
+assumptions:
+- the EMV Chip AID is referring to the list of application ids obtained by getAidList
+- the transactions list should update automatically based on any changes to any of the fields
+- changing transaction serial number or customer pan number serves as a filter for certain transactions, but is not an input into the api call
+- search was not implemented fully as I was unsure of the search constraints
+
+running:
+
+main.html is the main file here, and contains the transactions tab of the project, by running start ./main.html, it should launch a browser session
+from here, the menu on the left hand side contains all 5 menu options, of which all of them other than transactions hasn't been implemented
+
+inside transactions, the 5 input fields have been implemented with a range of dates for the dates option, all of the atm IDs fetched from getAtmList, as well as all the application IDs from getAidList
+from there, once any of the input fields are changed, the transaction list should update accordingly (based on the commented out javascript code), however due to issues using getPastFutureTransactions, I was not able to get this feature fully working
+

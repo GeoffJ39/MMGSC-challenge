@@ -1,0 +1,119 @@
+.container {
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.menu {
+    width: 200px;
+    background-color: #f0f0f0;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.menu ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menu li {
+    margin-bottom: 10px;
+}
+
+.menu a {
+    text-decoration: none;
+    color: #000;
+    display: block;
+    padding: 10px;
+    border: 1px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.menu a:hover {
+    background-color: #ddd;
+}
+
+.menu a.active {
+    border: 1px solid #000;
+}
+
+.content {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.btn {
+    padding: 12px;
+    font-size: 16px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.header h1 {
+    font-size: 24px;
+    margin: 0;
+}
+
+.fields {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+}
+
+.field label {
+    margin-bottom: 5px;
+}
+
+.field input {
+    width: 200px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.btn:hover {
+    cursor: pointer;
+}
+
+.form-field {
+    width: 240px;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+
+.transaction_section {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr); /* Set the number of columns and their widths */
+    gap: 10px; /* Add gap between the columns as needed */
+}
+
+.column {
+    flex-basis: 20%; /* Adjust as needed to set the width of each column */
+    padding: 10px; /* Add padding as needed */
+    /* Add any other styling for the columns as needed */
+}
+
+.search-bar {
+flex-basis: 20%; /* Adjust as needed to set the width of the search bar */
+padding: 10px; /* Add padding as needed */
+display: flex;
+align-items: center;
+justify-content: flex-end;
+/* Add any other styling for the search bar as needed */
+}

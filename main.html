@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<html>
+<head>
+    <title>Website Template</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="menu">
+            <ul>
+                <li style="border-left:3px solid #000; background-color: darkgrey;"><a href="main.html">Transactions</a></li>
+                <li><a href="settings.html">Setting</a></li>
+                <li><a href="user_management.html">User management</a></li>
+                <li><a href="ATM_management.html">ATM management</a></li>
+                <li><a href="My_account.html">My account</a></li>
+            </ul>
+        </div>
+        <div class="content">
+            <div class="header">
+                <h1>All Transactions</h1>
+                <div class="buttons">
+                    <button id="printBtn" class="btn">Print</button>
+                    <button id="exportBtn" class="btn">Export</button>
+                    <script>
+                        document.getElementById('printBtn').addEventListener('click', function() {
+                            alert('Not Implemented');
+                        });
+
+                        document.getElementById('exportBtn').addEventListener('click', function() {
+                            alert('Not Implemented');
+                        });
+                    </script>
+                </div>
+            </div>
+            <div class="fields">
+                <div class="field">
+                    <label for="date-range">Date Range:</label>
+                    <input type="text" id="date-range">
+                    <script>
+                        var defaultStartDate = new Date("2020-11-06");
+                        var defaultEndDate = new Date("2020-11-07");
+
+                        flatpickr("#date-range", {
+                        mode: "range",
+                        defaultDate: [defaultStartDate, defaultEndDate],
+                        onChange: function (selectedDates, dateStr, instance) {
+                            console.log("Selected Date Range: " + dateStr);
+                        }
+                        });
+                    </script>
+                </div>
+                <div class="field">
+                    <label for="atm-select">ATM ID</label>
+                    <select id="atm-select" class="form-field"><option value="all">All ATM IDs</option></select>
+                    <script>
+                        const apiUrl = 'https://dev.smartjournal.net:443/um/test/api/jr/txn/atmlist/v1';
+    
+                        const atmSelect = document.getElementById('atm-select');
+    
+                        fetch(apiUrl)
+                        .then(response => {
+                            if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            console.log(data);
+                            data.forEach(atm => {
+                            const option = document.createElement('option');
+                            option.value = atm.id; 
+                            option.textContent = atm.id; 
+                            atmSelect.appendChild(option); 
+                            });
+                        })
+                        .catch(error => {
+                            console.error('Error fetching API:', error);
+                        });
+                    </script>
+                </div>     
+                <div class="field">
+                    <label for="field2">Customer PAN Number</label>
+                    <input type="text" class="form-field" id="field2" placeholder="Partial or full card number">
+                </div>
+                <div class="field">
+                    <label for="field3">EMV Chip AID</label>
+                    <select id="aid-select" class="form-field"><option value="all">All Applications</option></select>
+                    <script>
+                        const apiUrl2 = 'https://dev.smartjournal.net:443/um/test/api/jr/txn/aidlist/v1';
+    
+                        const aidSelect = document.getElementById('aid-select');
+
+                        // Make the GET request using Fetch API
+                        fetch(apiUrl2)
+                        .then(response => {
+                            if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            // Handle the API response data
+                            console.log(data);
+                            // Loop through the data and create an option element for each ATM ID
+                            data.forEach(aid => {
+                            const option = document.createElement('option');
+                            option.value = aid.id; // Set the value attribute to the ATM ID
+                            option.textContent = aid.id; // Set the text content of the option to the ATM ID
+                            aidSelect.appendChild(option); // Append the option to the select element
+                            });
+                        })
+                        .catch(error => {
+                            // Handle any errors that occurred during the API request
+                            console.error('Error fetching API:', error);
+                        });
+                    </script>
+                </div>
+                <div class="field">
+                    <label for="field4">Transaction Serial Number</label>
+                    <input type="text" id="field4" placeholder="4 digit number">
+                </div>
+            </div>
+            <div class="transaction_section">
+                <div class="column">
+                  <h3>Date</h3>
+                  <p>Content for column 1</p>
+                </div>
+                <div class="column">
+                  <h3>ATM ID</h3>
+                  <p>Content for column 2</p>
+                </div>
+                <div class="column">
+                  <h3>Customer PAN</h3>
+                  <p>Content for column 3</p>
+                </div>
+                <div class="column">
+                  <h3>Description</h3>
+                  <p>Content for column 4</p>
+                </div>
+                <div class="column">
+                  <h3>Code</h3>
+                  <p>Content for column 5</p>
+                </div>
+                <div class="search-bar">
+                  <input type="text" placeholder="Search in results" />
+                  <button>Search</button>
+                </div>
+              </div>
+            <!--
+            <script>
+                var selectedAtmId = document.getElementById("atm-select").value;
+                var startDate = selectedDates[0];
+                var endDate = selectedDates[1];
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET", "https://dev.smartjournal.net:443/um/test/api/jr/txn/txnlist/" + selectedAtmId + "/" + startDate + "-" + endDate + "/v1?n=0", true);
+                xhr.onreadystatechange = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                    var responseData = JSON.parse(xhr.responseText);
+                    var section = document.getElementById("section");
+                    section.innerHTML = ""; // Clear existing content
+                    for (var i = 0; i < responseData.length; i++) {
+                        var transaction = responseData[i];
+                        var transactionElement = document.createElement("p");
+                        transactionElement.textContent = "Transaction ID: " + transaction.id + ", Amount: " + transaction.amount + ", Date: " + transaction.date;
+                        section.appendChild(transactionElement);
+                    }
+                    } else {
+                    console.error("Error making API request: " + xhr.status);
+                    }
+                }
+                };
+                xhr.send();
+            </script>
+            -->
+        </div>
+    </div>
+</body>
+</html>
